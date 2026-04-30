@@ -1,8 +1,22 @@
-//
-//  HomeView.swift
-//  contoh
-//
-//  Created by user on 30/04/26.
-//
 
-import Foundation
+import SwiftUI
+
+struct HomeView: View {
+    @EnvironmentObject var services : Services
+    
+    var body: some View {
+        VStack{
+            Text(self.services.getFormattedDate())
+            Text("Home View New")
+            Button(
+                action : {
+                    self.services.isLoggedIn = false
+                }
+                
+            ){
+              Text("Logout")
+            }
+        }
+        
+    }
+}
