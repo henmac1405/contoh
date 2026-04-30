@@ -50,7 +50,7 @@ struct LoginView: View {
                     if (self.username.isEmpty || self.password.isEmpty ) {
 //                        isEmptyField = true
                         self.services.showAlert = true
-                        self.services.messageAlert = "Username dan password tidak boleh kosong HENDRA"
+                        self.services.messageAlert = "Username dan password tidak boleh kosong HENDRA CEK"
                     } else {
                         self.services.isLoggedIn = true
                         self.services.isLoading = true
