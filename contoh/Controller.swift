@@ -3,7 +3,7 @@ import SwiftUICore
 import UIKit
 import SwiftyJSON
 
-class Services : ObservableObject{
+class Controller : ObservableObject{
     @Published var isLoggedIn = false
     @Published var isLoading = false
     @Published var isCorrect = true
@@ -28,6 +28,6 @@ class Services : ObservableObject{
         return formatter.string(from: Date())
     }
     
-    //API ===========================================================================================
+    //API ============================================================================================
     
 }
