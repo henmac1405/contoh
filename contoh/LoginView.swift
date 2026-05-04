@@ -3,11 +3,11 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var controller : Controller
-    @State private var username : String = ""
-    @State private var password : String = ""
+    @State private var username : String = "XXX"
+    @State private var password : String = "XXX"
     @State var isEmptyField = false
     let lightGrayColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0 )
-    //tes GITHUB
+    //tes MERGE
     
     var body: some View {
         
