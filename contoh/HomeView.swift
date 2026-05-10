@@ -39,6 +39,21 @@ struct HomeView: View {
                     self.controller.getBranch()
                 })
                 
+                // Terminal Button
+                NavigationLink(destination: TerminalView()) {
+                    HStack {
+                        Spacer()
+                        Text("Terminal")
+                            .bold()
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color.purple)
+                    .cornerRadius(15)
+                }
+                
+                
                 // Camera Button
                 NavigationLink(destination: CameraView()) {
                     HStack {
