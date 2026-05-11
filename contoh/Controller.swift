@@ -130,6 +130,8 @@ class Controller : ObservableObject{
             
             if let error = error {
                 print("Error:", error.localizedDescription)
+                self.showAlert = true
+                self.responseMessage = "Error : \(error.localizedDescription)"
                 return
             }
             
@@ -183,6 +185,8 @@ class Controller : ObservableObject{
             
             if let error = error {
                 print("Error:", error.localizedDescription)
+                self.showAlert = true
+                self.responseMessage = "Error : \(error.localizedDescription)"
                 return
             }
             
@@ -232,6 +236,8 @@ class Controller : ObservableObject{
             
             if let error = error {
                 print("Error:", error.localizedDescription)
+                self.showAlert = true
+                self.responseMessage = "Error : \(error.localizedDescription)"
                 return
             }
             
@@ -290,6 +296,8 @@ class Controller : ObservableObject{
             
             if let error = error {
                 print("Error:", error.localizedDescription)
+                self.showAlert = true
+                self.responseMessage = "Error : \(error.localizedDescription)"
                 return
             }
             
@@ -354,6 +362,8 @@ class Controller : ObservableObject{
             
             if let error = error {
                 print("Error:", error.localizedDescription)
+                self.showAlert = true
+                self.responseMessage = "Error : \(error.localizedDescription)"
                 return
             }
             
@@ -423,6 +433,8 @@ class Controller : ObservableObject{
             
             if let error = error {
                 print("Error:", error.localizedDescription)
+                self.showAlert = true
+                self.responseMessage = "Error : \(error.localizedDescription)"
                 return
             }
             
