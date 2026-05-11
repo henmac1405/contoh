@@ -25,6 +25,7 @@ struct LoginView: View {
                             .padding()
                             .background(Color.white)
                             .cornerRadius(10)
+                            .autocapitalization(.none)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color.gray.opacity(0.5), lineWidth: 1)
@@ -32,9 +33,9 @@ struct LoginView: View {
                         
                         HStack {
                             if isPasswordVisible {
-                                TextField("Password", text: $password)
+                                TextField("Password", text: $password).autocapitalization(.none)
                             } else {
-                                SecureField("Password", text: $password)
+                                SecureField("Password", text: $password).autocapitalization(.none)
                             }
                             
                             Button(action: { isPasswordVisible.toggle() }) {

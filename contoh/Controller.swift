@@ -9,7 +9,7 @@ class Controller : ObservableObject{
     @Published var isLoggedIn = false
     @Published var isLoading = false
     @Published var isCorrect = true
-    @Published var url_api = "https://api.transstudiomini.com/index.php/apiv5/"
+    @Published var url_api = "https://apidev.transstudiomini.com/index.php/apiv5/"
     
     @Published var showAlert = false
     @Published var messageAlert = ""
@@ -336,9 +336,6 @@ class Controller : ObservableObject{
         print(url)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        print("user_id : \(self.username)")
-        print("user_pin : \(self.user_password)")
-        print("password : \(self.user_password.md5.uppercased())")
          
         request.setValue(self.apiKey, forHTTPHeaderField: "APIKEY")
         request.setValue(self.token, forHTTPHeaderField: "TOKEN")
@@ -390,6 +387,59 @@ class Controller : ObservableObject{
                     self.isLoading = false
                     self.showAlert = true
                 }
+            }
+        }.resume()
+    }
+    
+    func getTerminal(terminalid : String, branchid : String, salestypeid : String, machineid : String, completion: @escaping (JSON?) -> Void) {
+        let timestampWithZ = ISO8601DateFormatter().string(from: Date())
+        let apiname = "terminal/terminal_find"
+        
+        self.isLoading = true
+        
+        guard let url = URL(string: self.url_api + apiname) else { return }
+        print(url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+         
+        request.setValue(self.apiKey, forHTTPHeaderField: "APIKEY")
+        request.setValue(self.token, forHTTPHeaderField: "TOKEN")
+        request.setValue(timestampWithZ, forHTTPHeaderField: "TIMESTAMP")
+        
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "terminal_id", value: terminalid),
+            URLQueryItem(name: "branch_id", value: branchid),
+            URLQueryItem(name: "salestype_id", value: salestypeid),
+            URLQueryItem(name: "machine_id", value: machineid),
+            URLQueryItem(name: "mac_address", value: "")
+        ]
+        request.httpBody = components.query?.data(using: .utf8)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            
+            if let error = error {
+                print("Error:", error.localizedDescription)
+                return
+            }
+            
+            guard let data = data else { return }
+             
+            let json = JSON(data)
+            let message = json["message"].stringValue
+            print(json)
+            print(message)
+            print(json["state"])
+            self.dataBranch.removeAll()
+            
+            DispatchQueue.main.async {
+                self.responseMessage = message
+                self.isLoading = false
+                completion(json)
+                 
             }
         }.resume()
     }
