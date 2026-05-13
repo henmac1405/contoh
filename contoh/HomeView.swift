@@ -4,6 +4,8 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var controller : Controller
     @StateObject var locationManager = LocationManager()
+    @State private var showCalendar = false
+    @State private var showDate = Date()
     
     var body: some View {
         NavigationView {
@@ -83,6 +85,32 @@ struct HomeView: View {
                     .cornerRadius(15)
                     
                 }
+                // Calender Button
+                Button(action:{
+                    showCalendar = true
+                }){
+                    HStack {
+                        Spacer()
+                        Text("Calender")
+                            .bold()
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color.gray)
+                    .cornerRadius(15)
+                }
+                .sheet(isPresented: $showCalendar) {
+                    VStack {
+                        DatePicker("Pilih Tanggal", selection: $showDate, displayedComponents: .date)
+                            .datePickerStyle(.graphical)
+                            .padding()
+                        Button("Selesai") { showCalendar = false }
+                            .padding()
+                    }
+                    .presentationDetents([.medium])
+                }
+                
                 // Logout Button
                 HStack{
                     Spacer()
