@@ -2,21 +2,21 @@
 import Foundation
 import SwiftUI
 
-struct DeviceView: View {
+struct UserView: View {
     @EnvironmentObject var controller : Controller
-    
+    //
     var body: some View {
         NavigationView{
             ScrollView{
                 VStack(alignment: .leading, spacing: 10) {
                     
-                    ForEach(self.controller.dataBranch, id: \.branch_id) { item in
+                    ForEach(self.controller.dataUserIbos, id: \.username) { item in
                         
-                        NavigationLink(destination: BranchDetilView(branch: item)){
+                        NavigationLink(destination: Text("Detail Page")){
                             
                             HStack{
-                                Text("\(item.branch_id)").padding(.leading, 10)
-                                Text("\(item.branch_name)").padding(.leading, 10)
+                                Text("\(item.username)").padding(.leading, 10)
+                                Text("\(item.user_fullname)").padding(.leading, 10)
                             }
                         }
                          
@@ -24,7 +24,7 @@ struct DeviceView: View {
                     
                 }
                 .padding()
-                .navigationTitle("Data Branch") // Judul muncul di posisi yang benar
+                .navigationTitle("Data User") // Judul muncul di posisi yang benar
                 .navigationBarTitleDisplayMode(.inline) // Gaya judul kecil di tengah (lebih rapi)
             }
         }

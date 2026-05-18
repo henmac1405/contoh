@@ -16,3 +16,9 @@ struct DataBranch : Codable {
     var branch_telp: String
     var branch_city: String
 }
+
+struct DataUserIbos : Codable{
+    var username : String
+    var user_fullname:String
+    
+}

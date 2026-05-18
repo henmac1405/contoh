@@ -32,7 +32,7 @@ class Controller : ObservableObject{
     //Model
     @Published var dataUser : [DataUser] = []
     @Published var dataBranch : [DataBranch] = []
-    
+    @Published var dataUserIbos:[DataUserIbos]=[]
     
     // Function ==================================================================================
     func getFormattedDate() -> String {
@@ -455,6 +455,72 @@ class Controller : ObservableObject{
             }
         }.resume()
     }
+    
+    
+    func getUserIbos() {
+            let timestampWithZ = ISO8601DateFormatter().string(from: Date())
+            let apiname = "user/user_getall"
+            
+            self.isLoading = true
+            
+            guard let url = URL(string: self.url_api + apiname) else { return }
+           
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+             
+            request.setValue(self.apiKey, forHTTPHeaderField: "APIKEY")
+            request.setValue(self.token, forHTTPHeaderField: "TOKEN")
+            request.setValue(timestampWithZ, forHTTPHeaderField: "TIMESTAMP")
+            
+            var components = URLComponents()
+            components.queryItems = [
+                URLQueryItem(name: "username", value: "")
+            ]
+            request.httpBody = components.query?.data(using: .utf8)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                
+                
+                if let error = error {
+                    print("Error:", error.localizedDescription)
+                    self.showAlert = true
+                    self.responseMessage = "Error : \(error.localizedDescription)"
+                    return
+                }
+                
+                guard let data = data else { return }
+                 
+                let json = JSON(data)
+                let message = json["message"].stringValue
+                print(json)
+                print(message)
+                print(json["state"])
+                self.dataBranch.removeAll()
+                
+                DispatchQueue.main.async {
+                    self.responseMessage = message
+                    if (json["state"] == true){
+                        self.isCorrect = true
+                        self.showAlert = false
+                        self.isLoading = false
+                        for (_, subJson):(String, JSON) in json["data"] {
+                            let username = subJson["username"].stringValue
+                            let user_fullname = subJson["user_fullname"].stringValue
+                            self.dataUserIbos.append(DataUserIbos( username: username, user_fullname : user_fullname))
+                        }
+                    } else {
+                        self.responseMessage = message
+                        print("error : \(self.responseMessage)")
+                        self.isCorrect = false
+                        self.isLoading = false
+                        self.showAlert = true
+                    }
+                }
+            }.resume()
+        }
+        
 }
 
 extension String {

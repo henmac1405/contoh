@@ -55,7 +55,21 @@ struct HomeView: View {
                     .cornerRadius(15)
                 }
                 
-                
+                NavigationLink(destination: UserView()) {
+                             HStack {
+                                 Spacer()
+                                 Text("User")
+                                     .bold()
+                                     .foregroundColor(.white)
+                                 Spacer()
+                             }
+                             .padding()
+                             .background(Color.green)
+                             .cornerRadius(15)
+                         }
+                         .simultaneousGesture(TapGesture().onEnded {
+                             self.controller.getUserIbos()
+                         })
                 // Camera Button
                 NavigationLink(destination: CameraView()) {
                     HStack {
