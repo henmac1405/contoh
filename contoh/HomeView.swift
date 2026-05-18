@@ -6,7 +6,7 @@ struct HomeView: View {
     @StateObject var locationManager = LocationManager()
     @State private var showCalendar = false
     @State private var showDate = Date()
-    //update by Hendra
+    //update by Hendra 18052026
     var body: some View {
         NavigationView {
             
